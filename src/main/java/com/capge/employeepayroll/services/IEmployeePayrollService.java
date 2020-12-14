@@ -3,12 +3,18 @@ package com.capge.employeepayroll.services;
 import java.util.List;
 
 import com.capge.employeepayroll.dto.EmployeePayrollDTO;
+import com.capge.employeepayroll.exception.EmployeeException;
 import com.capge.employeepayroll.model.EmployeePayrollData;
+
 public interface IEmployeePayrollService {
-	List<EmployeePayrollData> getEmployeePayrollData();
+	public EmployeePayrollData addEmployee(EmployeePayrollDTO employeeDTO);
 	
-	EmployeePayrollData getEmployeePayrollDataById(int empId);
-	EmployeePayrollData createEmployeePayrollData(EmployeePayrollDTO empPayrollDTO);
-	EmployeePayrollData updateEmployeePayrollData(int id, EmployeePayrollDTO employeePayrollDTO);
-	void deleteEmployeePayrollDataById(int empId);
+	public void updateEmployeeById(Long id, EmployeePayrollDTO employeeDTO) throws EmployeeException;
+
+	public EmployeePayrollData getEmployeeById(Long id) throws EmployeeException;
+
+	public void deleteEmployeeById(Long id);
+
+	public List getAllEmployees();
+
 }
