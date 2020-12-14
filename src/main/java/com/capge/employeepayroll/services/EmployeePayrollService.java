@@ -4,10 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.capge.employeepayroll.dto.EmployeePayrollDTO;
-import com.capge.employeepayroll.exception.EmployeeException;
+import com.capge.employeepayroll.exception.EmployeePayrollException;
 import com.capge.employeepayroll.model.EmployeePayrollData;
 import com.capge.employeepayroll.repository.IEmployeeRepository;
 
@@ -23,11 +22,11 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 		return emp;
 	}
 	@Override
-	public EmployeePayrollData getEmployeeById(Long id) throws EmployeeException {
-		return employeeRepository.findById(id).orElseThrow(() -> new EmployeeException("Invalid User id"));
+	public EmployeePayrollData getEmployeeById(Long id) throws EmployeePayrollException {
+		return employeeRepository.findById(id).orElseThrow(() -> new EmployeePayrollException("Invalid User id"));
 	}
 	@Override
-	public void updateEmployeeById(Long id, EmployeePayrollDTO employeeDTO) throws EmployeeException {
+	public void updateEmployeeById(Long id, EmployeePayrollDTO employeeDTO) throws EmployeePayrollException {
 		EmployeePayrollData emp = getEmployeeById(id);
 		if (employeeDTO.name != null) {
 			emp.setName(employeeDTO.name);

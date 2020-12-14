@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capge.employeepayroll.dto.EmployeePayrollDTO;
 import com.capge.employeepayroll.dto.ResponseDTO;
-import com.capge.employeepayroll.exception.EmployeeException;
+import com.capge.employeepayroll.exception.EmployeePayrollException;
 import com.capge.employeepayroll.model.EmployeePayrollData;
 import com.capge.employeepayroll.services.IEmployeePayrollService;
 
@@ -35,7 +35,7 @@ public class EmployeePayrollController {
 	}
 
 	@GetMapping("/get/{empId}")
-	public ResponseEntity<EmployeePayrollData> getEmployeeDataById(@PathVariable("empId") Long empId) throws EmployeeException {
+	public ResponseEntity<EmployeePayrollData> getEmployeeDataById(@PathVariable("empId") Long empId) throws EmployeePayrollException{
 		EmployeePayrollData emp = empService.getEmployeeById(empId);
 		return new ResponseEntity<EmployeePayrollData>(emp, HttpStatus.OK);
 	}
@@ -47,8 +47,8 @@ public class EmployeePayrollController {
 	}
 
 	@PutMapping("/update/{empId}")
-	public ResponseEntity<ResponseDTO> updateEmployee(@PathVariable("empId") Long empId,
-			@RequestBody EmployeePayrollDTO employeeDTO) throws EmployeeException {
+	public ResponseEntity<ResponseDTO> updateEmployee(@Valid @PathVariable("empId") Long empId,@Valid
+			@RequestBody EmployeePayrollDTO employeeDTO) throws EmployeePayrollException {
 		empService.updateEmployeeById(empId, employeeDTO);
 		ResponseDTO responseDTO = new ResponseDTO("Updated the Employee Data", getEmployeeDataById(empId));
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
