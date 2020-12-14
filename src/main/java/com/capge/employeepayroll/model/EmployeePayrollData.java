@@ -12,13 +12,12 @@ import com.capge.employeepayroll.dto.EmployeePayrollDTO;
 
 @Entity
 @Table(name = "employee")
-@Transactional
 public class EmployeePayrollData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private long salary;
+	private Long salary;
 
 	public EmployeePayrollData() {
 	}
@@ -48,7 +47,7 @@ public class EmployeePayrollData {
 		return salary;
 	}
 
-	public void setSalary(long salary) {
+	public void setSalary(Long salary) {
 		this.salary = salary;
 	}
 

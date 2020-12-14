@@ -8,7 +8,7 @@ import lombok.Data;
 
 public @Data class EmployeePayrollDTO {
 	@NotEmpty
-	@Pattern(regexp = "^[A-Z]{1}[A-Za-z\\s]{2,}$", message = "Employee valid name")
+	@Pattern(regexp = "^[A-Z]{1}[A-Za-z\\s]{2,}$", message = "Put an Employee valid name")
 	public String name;
 	@Min(value=500, message = "Minimum wage should be more than 500")
 	public long salary;
