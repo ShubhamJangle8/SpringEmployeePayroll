@@ -43,7 +43,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	}
 
 	@Override
-	public List getAllEmployees() {
-		return (List) employeeRepository.findAll();
+	public List<EmployeePayrollData> getAllEmployees() {
+		return (List<EmployeePayrollData>) employeeRepository.findAll();
 	}
 }

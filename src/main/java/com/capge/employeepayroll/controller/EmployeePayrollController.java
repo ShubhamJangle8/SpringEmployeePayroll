@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capge.employeepayroll.dto.EmployeePayrollDTO;
@@ -23,8 +22,11 @@ import com.capge.employeepayroll.exception.EmployeePayrollException;
 import com.capge.employeepayroll.model.EmployeePayrollData;
 import com.capge.employeepayroll.services.IEmployeePayrollService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/hello")
+@Slf4j
 public class EmployeePayrollController {
 	@Autowired
 	IEmployeePayrollService empService;
@@ -42,6 +44,7 @@ public class EmployeePayrollController {
 
 	@PostMapping("/create")
 	public ResponseEntity<EmployeePayrollData> addEmployee(@Valid @RequestBody EmployeePayrollDTO employeeDTO) {
+		log.debug("Employee DTO : " + employeeDTO.toString());
 		EmployeePayrollData emp = empService.addEmployee(employeeDTO);
 		return new ResponseEntity<EmployeePayrollData>(emp, HttpStatus.OK);
 	}

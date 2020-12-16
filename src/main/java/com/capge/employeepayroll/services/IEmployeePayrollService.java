@@ -15,6 +15,6 @@ public interface IEmployeePayrollService {
 
 	public void deleteEmployeeById(Long id);
 
-	public List getAllEmployees();
+	public List<EmployeePayrollData> getAllEmployees();
 
 }
