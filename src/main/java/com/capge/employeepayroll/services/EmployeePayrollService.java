@@ -25,6 +25,12 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	public EmployeePayrollData getEmployeeById(Long id) throws EmployeePayrollException {
 		return employeeRepository.findById(id).orElseThrow(() -> new EmployeePayrollException("Invalid User id"));
 	}
+	
+	@Override
+	public List<EmployeePayrollData> getEmployeeByDepartment(String department) {
+		return employeeRepository.findEmployeeByDepartment(department);
+	}
+	
 	@Override
 	public void updateEmployeeById(Long id, EmployeePayrollDTO employeeDTO) throws EmployeePayrollException {
 		EmployeePayrollData emp = getEmployeeById(id);
@@ -46,4 +52,5 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	public List<EmployeePayrollData> getAllEmployees() {
 		return (List<EmployeePayrollData>) employeeRepository.findAll();
 	}
+	
 }

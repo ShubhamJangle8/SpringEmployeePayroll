@@ -17,4 +17,6 @@ public interface IEmployeePayrollService {
 
 	public List<EmployeePayrollData> getAllEmployees();
 
+	public List<EmployeePayrollData> getEmployeeByDepartment(String department);
+
 }

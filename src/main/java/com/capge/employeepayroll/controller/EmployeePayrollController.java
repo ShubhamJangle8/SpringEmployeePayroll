@@ -37,16 +37,24 @@ public class EmployeePayrollController {
 	}
 
 	@GetMapping("/get/{empId}")
-	public ResponseEntity<EmployeePayrollData> getEmployeeDataById(@PathVariable("empId") Long empId) throws EmployeePayrollException{
+	public ResponseEntity<ResponseDTO> getEmployeeDataById(@PathVariable("empId") Long empId) throws EmployeePayrollException{
 		EmployeePayrollData emp = empService.getEmployeeById(empId);
-		return new ResponseEntity<EmployeePayrollData>(emp, HttpStatus.OK);
+		ResponseDTO responseDTO = new ResponseDTO("Got the Employee Data for id " + empId, emp);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+	}
+	
+	@GetMapping("/department/{department}")
+	public ResponseEntity<ResponseDTO> getEmployeeData(@PathVariable("department") String department){
+		ResponseDTO responseDTO = new ResponseDTO("Got the Employees for the department", empService.getEmployeeByDepartment(department));
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<EmployeePayrollData> addEmployee(@Valid @RequestBody EmployeePayrollDTO employeeDTO) {
+	public ResponseEntity<ResponseDTO> addEmployee(@Valid @RequestBody EmployeePayrollDTO employeeDTO) {
 		log.debug("Employee DTO : " + employeeDTO.toString());
 		EmployeePayrollData emp = empService.addEmployee(employeeDTO);
-		return new ResponseEntity<EmployeePayrollData>(emp, HttpStatus.OK);
+		ResponseDTO responseDTO = new ResponseDTO("Created the Employee Data", emp);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{empId}")
@@ -58,14 +66,17 @@ public class EmployeePayrollController {
 	}
 
 	@DeleteMapping("/delete/{empId}")
-	public ResponseEntity<String> deleteEmployeeById(@PathVariable("empId") Long empId) {
+	public ResponseEntity<ResponseDTO> deleteEmployeeById(@PathVariable("empId") Long empId) {
 		empService.deleteEmployeeById(empId);
-		return new ResponseEntity<String>("Deleted the employee with id : " + empId, HttpStatus.OK);
+		String message = "Deleted the employee with id : " + empId;
+		ResponseDTO responseDTO = new ResponseDTO("Deleted the Employee Data", message);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/getall")
-	public ResponseEntity<List<EmployeePayrollData>> getAllEmployees() {
-		List employeesList = empService.getAllEmployees();
-		return new ResponseEntity<>(employeesList, HttpStatus.OK);
+	public ResponseEntity<ResponseDTO> getAllEmployees() {
+		List<EmployeePayrollData> employeesList = empService.getAllEmployees();
+		ResponseDTO responseDTO = new ResponseDTO("Got the Employee Data", employeesList);
+		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
 	}
 }
