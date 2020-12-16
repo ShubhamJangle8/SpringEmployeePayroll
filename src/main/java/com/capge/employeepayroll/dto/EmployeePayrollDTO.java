@@ -31,4 +31,5 @@ public @Data class EmployeePayrollDTO {
 	public String note;
 	@NotNull(message = "ProfilePic cannot be Empty")
 	public String profilePic;
+	public List<String> departments;
 }
