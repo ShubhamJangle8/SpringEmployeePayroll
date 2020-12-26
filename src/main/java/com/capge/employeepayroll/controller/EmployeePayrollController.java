@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,20 +23,22 @@ import com.capge.employeepayroll.exception.EmployeePayrollException;
 import com.capge.employeepayroll.model.EmployeePayrollData;
 import com.capge.employeepayroll.services.IEmployeePayrollService;
 
-import lombok.extern.slf4j.Slf4j;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+@Api(description = "Controller to handle requests for the employee payroll service")
+@CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/hello")
-@Slf4j
+@RequestMapping("/employee")
 public class EmployeePayrollController {
 	@Autowired
 	IEmployeePayrollService empService;
-
+	
 	@GetMapping(value= {"/","","/home"})
 	public ResponseEntity<String> getEmployeeData() {
 		return new ResponseEntity<String>("Get call success", HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "Get the contact data through service")
 	@GetMapping("/get/{empId}")
 	public ResponseEntity<ResponseDTO> getEmployeeDataById(@PathVariable("empId") Long empId) throws EmployeePayrollException{
 		EmployeePayrollData emp = empService.getEmployeeById(empId);
@@ -51,7 +54,6 @@ public class EmployeePayrollController {
 
 	@PostMapping("/create")
 	public ResponseEntity<ResponseDTO> addEmployee(@Valid @RequestBody EmployeePayrollDTO employeeDTO) {
-		log.debug("Employee DTO : " + employeeDTO.toString());
 		EmployeePayrollData emp = empService.addEmployee(employeeDTO);
 		ResponseDTO responseDTO = new ResponseDTO("Created the Employee Data", emp);
 		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);

@@ -10,6 +10,8 @@ import com.capge.employeepayroll.exception.EmployeePayrollException;
 import com.capge.employeepayroll.model.EmployeePayrollData;
 import com.capge.employeepayroll.repository.IEmployeeRepository;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService {
 	@Autowired
@@ -18,12 +20,15 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	@Override
 	public EmployeePayrollData addEmployee(EmployeePayrollDTO employeeDTO) {
 		EmployeePayrollData emp = new EmployeePayrollData(employeeDTO);
+		log.info(emp.toString());
 		emp = employeeRepository.save(emp);
 		return emp;
 	}
 	@Override
 	public EmployeePayrollData getEmployeeById(Long id) throws EmployeePayrollException {
-		return employeeRepository.findById(id).orElseThrow(() -> new EmployeePayrollException("Invalid User id"));
+		EmployeePayrollData empData = employeeRepository.findById(id).orElseThrow(() -> new EmployeePayrollException("Invalid User id"));
+		log.info(empData.toString());
+		return empData;
 	}
 	
 	@Override
@@ -34,12 +39,13 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 	@Override
 	public void updateEmployeeById(Long id, EmployeePayrollDTO employeeDTO) throws EmployeePayrollException {
 		EmployeePayrollData emp = getEmployeeById(id);
-		if (employeeDTO.name != null) {
-			emp.setName(employeeDTO.name);
-		}
-		if (employeeDTO.salary != 0.0) {
-			emp.setSalary(employeeDTO.salary);
-		}
+		emp.setName(employeeDTO.name);
+		emp.setSalary(employeeDTO.salary);
+		emp.setDepartment(employeeDTO.department);
+		emp.setGender(employeeDTO.gender);
+		emp.setNotes(employeeDTO.notes);
+		emp.setProfile(employeeDTO.profile);
+		emp.setStartDate(employeeDTO.startDate);
 		employeeRepository.save(emp);
 	}
 

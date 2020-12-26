@@ -23,13 +23,10 @@ public @Data class EmployeePayrollDTO {
 	public long salary;
 	@Pattern(regexp="male|female", message="Gender needs to be male or female")
 	public String gender;
-	@JsonFormat(pattern="yyyy-mm-dd")
-	@NotNull(message = "startDate should not be empty")
-	@PastOrPresent(message = "startDate should be past or today's date")
-	public LocalDate startDate;
+	public String startDate;
 	@NotBlank(message = "Note cannot be Empty")
-	public String note;
+	public String notes;
 	@NotNull(message = "ProfilePic cannot be Empty")
-	public String profilePic;
-	public List<String> departments;
+	public String profile;
+	public List<String> department;
 }
